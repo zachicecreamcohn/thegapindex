@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- specify viewport -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ title }}</title>
+        <!-- Link to Vue.js v3 -->
+        <script src="https://unpkg.com/vue@3"></script>
+        <!-- link css -->
+        <link rel="stylesheet" href="static/css/style.css">
+
+        <!-- link favicon.ico -->
+        <link rel="shortcut icon" href="static/img/favicon.ico">        
+        <!-- font resources -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="app">
+            <div id="header">
+                <div id="left-header">
+                    
+                    <div v-if="checkLoginStatus()">
+                        <img v-if="userData.imagePath != ''" @click="goToAccount" :src="'/static/profile_photos/' +getUserInfo().imagePath" alt="profile icon" class="header-icon" onerror="this.src='/static/img/default-profile-picture.jpg';">
+                        <img v-else @click='goToAccount' src="/static/img/default-profile-picture.jpg" alt="default profile image" class="header-icon">
+
+                    </div> 
+
+                    <a v-else id="register-link" @click='openRegister' href="{{ url_for('register') }}" class="header-text">Register</a>
+                    <a v-if='!checkLoginStatus()'id="login-link" @click='openLogin' href="{{ url_for('login') }}" class="header-text">Login</a>
+                    <a v-else id="logout-link" @click="logout" class="header-text clickable">Logout</a>
+                </div>
+
+                <div id="center-header">
+                    <div @click='goHome' id="logo">The Gap Index</div>
+                </div>
+                <div id="right-header">
+                    <div @click="openCart" id="cart-btn" ></div>  
+                </div>
+                  
+                
+            </div>
+            <div id='header-bar' class="horizontal-line"></div>
+
+            <div id="content">
+                <b>[[errorMessage]]</b>
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    </body>

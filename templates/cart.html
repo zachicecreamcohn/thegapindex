@@ -1,0 +1,50 @@
+{% extends "index.html" %}
+
+    
+{% block content %}
+<div id="empty-cart-message" v-if='productsInCart1.length == 0'>
+    <h2>Your cart is empty</h3>
+    <p>Add some products to your cart</p>
+</div>
+
+<div v-if='productsInCart1.length != 0' class="buynow-container" id="buynowcontainer">
+    <!-- button to open all links -->
+    <div id="productOriginQuantityBox">
+        <p id="num-gap">GAP products: [[numGAPinCart]]</p>
+        <p id="num-old">Old Navy products: [[numOLDinCart]]</p>
+        <p id="num-banana">Banana Republic products: [[numBANANAinCart]]</p>
+        <p id="num-athleta">Athleta products: [[numATHLETAinCart]]</p>
+    </div>
+    
+    <button id='buynow' class="button" @click="openAllLinks">Open Now</button>
+</div>
+    <div class="flex-center" id="cart-group">
+        
+            <tr>
+                <td>
+                    <table class="cartTable">
+                        <tr v-if="productsInCart1.length > 0" v-for="product in productsInCart1" :id="'cart-item_'+product.id">
+                            <td>
+                                <img @click='goToProduct(product.URL)' v-bind:src="product.mainImage" alt="product.name" class="cart-thumbnail">
+                            </td>
+                            <td>
+                                <p class="productName-cart">[[ product.name ]]</p>
+                                <p v-if="!product.isInStock">Out of Stock!</p>
+                            </td>
+                            <td>
+                                <p class="price">$[[ product.price ]]</p>
+                            </td>
+                            <td>
+                                <button class="button content-width" @click="add_remove_ToCart(product)">Remove</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                    
+            </tr>
+ 
+            
+ 
+    </div>
+    
+{% endblock %}

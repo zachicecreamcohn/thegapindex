@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div id="profile-content"></div>
+<img v-if="userData.imagePath != ''" :src="'/static/profile_photos/'+userData.imagePath" alt="profile image" class="profile-image"  onerror="this.src='/static/img/default-profile-picture.jpg';">
+<img v-else src="/static/img/default-profile-picture.jpg" alt="default profile image" class="profile-image">
+<h1 class="profile-name">[[getUserInfo().firstName]] [[userData.lastName]]</h1>
+<h3>EMAIL: <b>[[userData.email]]</b></h3>
+<h3>PHONE: <b>[[userData.phone]]</b></h3>
+
+
+
+<div class="horizontal-line" id="profile-divide"></div>
+   <h3>Upload a new profile picture (.png, .jpg, .jpeg)</h3>
+
+    <!-- upload image button -->
+    <div class="upload-image">
+        <input type="file" id="upload-image" name="new-image" accept="image/*">
+        <label for="upload-image" id="upload-label">Choose File</label>
+        <button @click="uploadImage" class="button" id="upload-btn">Upload</button>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="flex-center full-width">
+    <input type="text" class='search-bar' v-model="searchInput" @change='searchAction' placeholder="Search">
+</div>
+<div class='flex-center full-width'>
+    <h3 v-if='noResults'>No results found</h3>
+</div>
+<div id="content-group">
+
+    <div id="right-content">
+        
+        <div class="flex-center">
+            <div class="products-container">
+                
+                <div v-if="!currentPageProducts" v-for="skel in skeletonCount" class="product">
+                    <div class="skeleton-thumbnail skeleton"></div>
+                    <p class="text-skeleton skeleton">test</p>
+                    <p class="text-skeleton skeleton">test</p>
+
+                </div>
+                <div v-for="(product, index) in currentPageProducts" :key="product" :id="getID(index)" class="product" @mouseover="showAddToCart(product)" @mouseleave="hideAddToCart(product)">
+                    <img @click='goToProduct(product.URL)' v-bind:src="product.mainImage" alt="product.name" class="thumbnail">
+                    <p>[[ product.name ]]</p>
+                    <p>$[[ product.price ]]</p>
+                    <div class="add-to-cart-container" :id="'cart-popup_' + getID(product)" @mouseover="showAddToCart(product)" @mouseleave="hideAddToCart(product)" @click="add_remove_ToCart(product)">
+                        <img v-if="isInCart(product)" class="cart-icon" :id="'cart-icon_'+ getID(index)" src="/static/img/checkmark.svg" ></img>
+                        <img v-else class="cart-icon" :id="'cart-icon_'+ getID(product)" src="/static/img/shopping-cart.png" ></img>
+                    </div>
+                    <p v-if="product.inStock == 'false'">Out of Stock!</p>
+                    <!-- <p v-else>Out of Stock!</p> -->
+            
+                </div>
+                <div class="product"></div>
+                <div class="product"></div>
+                <div class="product"></div>
+
+            </div>
+        </div>
+            <div v-if="!noResults" class="pagination">
+                <button class="button" v-if="page > 1" @click="prevPage">Previous</button>
+                <button v-else class="button" disabled>Previous</button>
+                <p>[[currentPage]]/[[pageCount]]</p>
+                <button class='button' v-if="page < pageCount" @click="nextPage">Next</button>
+                <button v-else class="button" disabled>Next</button>
+            </div>
+        
+    </div>
+    <!-- page numbers -->
+
+
+</div>
+
+{% endblock %}

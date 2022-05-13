@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block content %}
+<!-- login -->
+<div class="flex-center full-width">
+    <div class="form-container">
+        <input v-if="enableRegister" type="text" class="form-input" v-model="registerFirstName" placeholder="First Name" required>
+        <input v-if="enableRegister" type="text" class="form-input" v-model="registerLastName" placeholder="Last Name" required>
+        <input v-if='enableRegister' type="email" class="form-input" v-model="registerEmail" placeholder="Email" required>
+        <input v-if='!enableRegister' type="email" class="form-input" v-model="loginEmail" placeholder="Email" required>
+        <input v-if='!enableRegister' type="password" class="form-input" v-model="loginPassword" placeholder="Password" required>
+        <input v-if='enableRegister' type="password" class="form-input" v-model="registerPassword" placeholder="Password" required>
+
+        <input v-if="enableRegister" type="tel" class="form-input" v-model="registerPhone" placeholder="Phone" required>
+
+        <div class="flex-center flex-row">    
+            <button v-if='!enableRegister' class="button faded" @click="openRegister">Register</button>
+            <button v-if='!enableRegister' class="button" @click="login">Login</button>
+            <button v-if='enableRegister' class="button faded" @click="openLogin">Login</button>
+            <button v-if='enableRegister' class="button" @click="register">Register</button>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
